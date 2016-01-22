@@ -28,7 +28,7 @@ function IsAnagram(firstString, secondString){
 	var secondArray = secondString.split('');
 
 	// If the arrays are different lenghts, return false immediately 
-	if (firstArraySorted.length != secondArraySorted.length){
+	if (firstArray.length != secondArray.length){
 		// console.log("Array lengths don't match");
 		return false;
 	}
