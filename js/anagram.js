@@ -10,13 +10,26 @@ function RunAnagramChecker(){
 	var secondString = document.getElementById("SecondString").value;
 	var statusTextYes = "Yes this is an anagram";
 	var statusTextNo = "No this is not an anagram";
+	var statusTextNoYG = "No this is not an anagram even though the strings may have the same unicode values. The backslash (U+005c) character in Japanese and Korean fonts contains the Yen and Won symbol and not a backslash. "
 
-	//Capital Check
+
+
+	//Edge Case: Yen\Won issue 
+	if(document.getElementById("YuGothic").checked == true){
+		//Check to see if there is a backslash 
+		if(firstString.indexOf("\\")> -1 & secondString.indexOf("\\")>-1){
+			document.getElementById("Status").innerHTML = statusTextNoYG;
+			//console.log("I got here");
+			return;
+		}
+	}
+
+	//Edge Case: Capital Check
 	if(document.getElementById("CapCheck").checked == false){
 		firstString = firstString.toLowerCase();
 		secondString = secondString.toLowerCase();
 	}
-
+	
 	//Run the IsAnagram Function 
 	if (IsAnagram(firstString, secondString) == true){
 		document.getElementById("Status").innerHTML = statusTextYes;
@@ -24,6 +37,8 @@ function RunAnagramChecker(){
 	else{
 		document.getElementById("Status").innerHTML = statusTextNo;
 	}
+
+	
 }
 
 // This function checks to see if the 2 strings are an anagram.
@@ -37,6 +52,13 @@ function IsAnagram(firstString, secondString){
 	// If the arrays are different lenghts, return false immediately 
 	if (firstArray.length != secondArray.length){
 		// console.log("Array lengths don't match");
+		return false;
+	}
+
+	// If the strings are empty return false immediatly. 
+	// At this point they are the same length, and it is enough to just check 
+	// the length of the first string. 
+	if (firstArray.length == 0){
 		return false;
 	}
 

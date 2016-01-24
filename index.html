@@ -27,13 +27,26 @@
       <!--Anagram Finder Designed for Space Constraints-->
       <!--http://www.w3schools.com/tags/tryit.asp?filename=tryhtml_form_submit-->
       <form action="demo_form.asp">
-        First String: <input type="text"  value="" id="FirstString"></input><br>
+        <div>This is an anigram checker. It can handle numbers and letters. There is also a check box to turn on and off whether or not capital letters should be counted in the anagram. Spaces are counted as letters.</div><br>
+        First String: <input type="text" style="font-family: 'Yu Gothic', serif;" value="" id="FirstString"></input><br>
+        Second String: <input type="text"  value="" id="SecondString"></input><br>
+      <input checked="true" type="checkbox" id="CapCheck">Should Capitals count?</input><br>
+      <input checked="true" type="checkbox" id="YuGothic">Handle Yen\Won issue?*</input><br>
+      <button type="button" onclick="RunAnagramChecker()">Click to see if the Strings are an anagram</button>
+      <div id="Status" style="color:green"></div>
+              <div>*There is a checkbox to handle the Yen issue in Japanese fonts. You may have noticed that I put different fonts in the boxes. This was to demonstarte this issue. In many Japanese and Korean Fonts (such as Yu Gothic or Malgun Gothic) the back slash character (U+005c) is hard coded to be a Yen or Won symbol respectively. The scenario handles the case for Yu Gothic. To test this scenario, type a backslash into each box, notice that a yen symbol is in the first box and a backslash is in the second box. Click the anagram button and notice that the status box briefly explains this issue.  </div><br>
+      </form><br>
+
+
+     <!-- <form action="demo_form.asp">
+        <div>In many Japanese and Korean Fonts (such as Yu Gothic or Malgun Gothic) the back slash character is hard coded to be a Yen or Won symbol respectively. This started in the 1960's, when there was not enough space on the keyboard to fit everything. This has now become industry standard. Many times this case is not caught before shipping. This hard coding will likely never be changed because all hardware keyboards in these languages have this behavior. If you break the behavior, pressing the Yen or Won symbol, respectively, on these hardware keyboards will input a backslash, which would be aweful. The below scenario handles the case for Yu Gothic. </div><br>
+        First String: <input type="text" style="font-family: 'Yu Gothic', serif;"  value="" id="FirstString"></input><br>
         Second String: <input type="text"  value="" id="SecondString"></input><br>
       <input checked="true" type="checkbox" id="CapCheck">Should Capitals count?</input><br>
       <button type="button" onclick="RunAnagramChecker()">Click to see if the Strings are an anagram</button>
-      <div id="Status"></div>
+      <div id="Status1"></div>
       </form>
-
+-->
 
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.com/mdunn120/anagram-checker">Anagram Checker</a> is maintained by <a href="https://github.com/mdunn120">mdunn120</a>.</span>
