@@ -11,6 +11,13 @@ function RunAnagramChecker(){
 	var statusTextYes = "Yes this is an anagram";
 	var statusTextNo = "No this is not an anagram";
 
+	//Capital Check
+	if(document.getElementById("CapCheck").checked == false){
+		firstString = firstString.toLowerCase();
+		secondString = secondString.toLowerCase();
+	}
+
+	//Run the IsAnagram Function 
 	if (IsAnagram(firstString, secondString) == true){
 		document.getElementById("Status").innerHTML = statusTextYes;
 	}
