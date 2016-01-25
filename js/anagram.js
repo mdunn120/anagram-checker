@@ -12,37 +12,46 @@ function RunAnagramChecker(){
 	var statusTextNo = "No this is not an anagram";
 	var statusTextNoYG = "No this is not an anagram even though the strings may have the same unicode values. The backslash (U+005c) character in Japanese and Korean fonts contains the Yen and Won symbol and not a backslash. "
 
-
-
-	//Edge Case: Yen\Won issue 
-	if(document.getElementById("YuGothic").checked == true){
-		//Check to see if there is a backslash 
-		if(firstString.indexOf("\\")> -1 & secondString.indexOf("\\")>-1){
+	// Edge Case: Yen\Won issue 
+	if (document.getElementById("YuGothic").checked == true){
+		// Check to see if there is a backslash 
+		if (firstString.indexOf("\\") > -1 & secondString.indexOf("\\") > -1){
 			document.getElementById("Status").innerHTML = statusTextNoYG;
-			//console.log("I got here");
 			return;
 		}
 	}
 
-	//Edge Case: Capital Check
-	if(document.getElementById("CapCheck").checked == false){
+	// Edge Case: Capital Check
+	if (document.getElementById("CapCheck").checked == false){
 		firstString = firstString.toLowerCase();
 		secondString = secondString.toLowerCase();
 	}
 	
-	//Run the IsAnagram Function 
-	if (IsAnagram(firstString, secondString) == true){
-		document.getElementById("Status").innerHTML = statusTextYes;
-	}
-	else{
-		document.getElementById("Status").innerHTML = statusTextNo;
-	}
 
-	
+	// Switch between the Hash and Sorting functions (specifically looking at the checkbox)
+	if (document.getElementById("sort").checked == true){
+		// Run the IsAnagram Function 
+		console.log("Sort is called")
+		if (IsAnagramSort(firstString, secondString) == true){
+			document.getElementById("Status").innerHTML = statusTextYes;
+		}
+		else {
+			document.getElementById("Status").innerHTML = statusTextNo;
+		}
+	}
+	else {
+		console.log("Hash is called")
+		if (IsAnagramHash(firstString, secondString) == true){
+			document.getElementById("Status").innerHTML = statusTextYes;
+		}
+		else {
+			document.getElementById("Status").innerHTML = statusTextNo;
+		}
+	}
 }
 
 // This function checks to see if the 2 strings are an anagram.
-function IsAnagram(firstString, secondString){
+function IsAnagramSort(firstString, secondString){
 
 	// http://www.w3schools.com/jsref/jsref_split.asp
 	// Split the strings into arrays
@@ -77,4 +86,55 @@ function IsAnagram(firstString, secondString){
 	return true;
 }
 
+// This will use CreateHash and CheckString2AgainstHash1
+function IsAnagramHash(firstString, secondString){
+	var secondArray = secondString.split('');
+	var hashMap = CreateHash(firstString);
 
+	for(var i = 0; i < secondArray.length; i++){
+		// Assign the LetterKey variable to be the ith element of the firstArray
+		letterKey = secondArray[i];
+
+		// Check to see if the LetterKey is found at all. If it is undefined return false 
+		if (hashMap[letterKey] == undefined){
+			return false;
+		}
+
+		else {
+			hashMap[letterKey] = hashMap[letterKey] - 1;
+			if (hashMap[letterKey] == 0){
+				// http://stackoverflow.com/questions/6295087/how-to-remove-item-from-a-javascript-object
+				delete hashMap[letterKey];
+			}
+		}
+	}
+	// http://stackoverflow.com/questions/3068534/getting-javascript-object-key-list
+	if (Object.keys(hashMap).length == 0){
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+// Create a hash for String1
+function CreateHash(firstString){
+
+	var firstArray = firstString.split('');
+	var hashMap = {};
+
+	// http://blog.xkoder.com/2008/07/10/javascript-associative-arrays-demystified/
+	for (var i = 0; i < firstArray.length; i++) {
+		// Assign the letterKey variable to be the ith element of the firstArray
+		letterKey = firstArray[i];
+		if (hashMap[letterKey] == undefined){
+			// Add letterKey to hashMap
+			// Set CountValue to 1
+			hashMap[letterKey] = 1;
+		}
+		else {
+	     	hashMap[letterKey] = hashMap[letterKey] + 1;
+	 	}
+	}
+	return hashMap; 
+}
